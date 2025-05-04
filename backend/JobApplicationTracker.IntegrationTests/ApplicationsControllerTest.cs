@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
 using JobApplicationTracker.Contracts;
@@ -100,5 +101,15 @@ public class ApplicationsControllerTest() : TestBase()
         
         // Assert
         DbContext.Applications.Count().Should().Be(1);
+    }
+    
+    [Fact]
+    public async Task Add_ShouldReturn400_WhenCompanyIsEmpty()
+    {
+        //Act
+        var response = await Client.PostAsJsonAsync("/applications", new CreateApplicationDto( "", ""));
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }
