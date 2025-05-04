@@ -9,6 +9,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 
 builder.Services.AddScoped<ApplicationRepository>();
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblyContaining<Program>();
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

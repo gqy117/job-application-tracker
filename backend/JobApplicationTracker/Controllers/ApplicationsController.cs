@@ -1,66 +1,48 @@
 using JobApplicationTracker.Contracts;
+using JobApplicationTracker.Handlers;
 using JobApplicationTracker.Repository;
-using JobApplicationTracker.Repository.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobApplicationTracker.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ApplicationsController(ApplicationRepository repository) : ControllerBase
+public class ApplicationsController(ApplicationRepository repository, IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IEnumerable<ApplicationDto>> Get()
     {
-        var result = await repository.GetAllAsync();
-        
-        return result.Select(x => new ApplicationDto(x.Id,
-            x.Company,
-            x.Position,
-            x.Status,
-            x.DateApplied
-        ));
+        return await mediator.Send(new GetAllApplicationsQuery());
     }
-    
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ApplicationDto>> GetById(int id)
     {
-        var app = await repository.GetByIdAsync(id);
-        if (app is null) 
+        var result = await mediator.Send(new GetApplicationByIdQuery(id));
+
+        if (result == null)
             return NotFound();
 
-        return new ApplicationDto(app.Id,
-            app.Company,
-            app.Position,
-            app.Status,
-            app.DateApplied
-        );
+        return result;
     }
-    
+
     [HttpPost]
     public async Task<ActionResult> Add([FromBody] CreateApplicationDto dto)
     {
-        await repository.AddAsync(new Application
-        {
-            Company = dto.CompanyName,
-            DateApplied = DateTime.Now,
-            Position = dto.Position,
-            Status = "",
-        });
-        
+        await mediator.Send(new CreateApplicationCommand(dto.CompanyName, dto.Position));
+
         return NoContent();
     }
-    
+
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] string status)
     {
-        var app = await repository.GetByIdAsync(id);
-        if (app is null) 
+        var result = await mediator.Send(new GetApplicationByIdQuery(id));
+        if (result is null)
             return NotFound();
 
-        app.Status = status;
-        
-        await repository.UpdateAsync(app);
+        await mediator.Send(new UpdateApplicationCommand(id, status));
 
         return NoContent();
     }
