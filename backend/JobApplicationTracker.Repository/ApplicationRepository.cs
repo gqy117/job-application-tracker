@@ -6,10 +6,14 @@ namespace JobApplicationTracker.Repository;
 public class ApplicationRepository(ApplicationDbContext db)
 {
     public async Task<List<Application>> GetAllAsync()
-        => await db.Applications.ToListAsync();
+    {
+        return await db.Applications.ToListAsync();
+    }
 
     public async Task<Application?> GetByIdAsync(int id)
-        => await db.Applications.FindAsync(id);
+    {
+        return await db.Applications.FindAsync(id);
+    }
 
     public async Task<Application> AddAsync(Application entity)
     {
@@ -24,6 +28,7 @@ public class ApplicationRepository(ApplicationDbContext db)
             return false;
 
         await db.SaveChangesAsync();
+
         return true;
     }
 }
