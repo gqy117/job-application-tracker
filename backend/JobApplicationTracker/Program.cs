@@ -1,6 +1,14 @@
+using JobApplicationTracker.Repository;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+    opt.UseInMemoryDatabase("JobApplicationsDb"));
+
+builder.Services
+    .AddScoped<ApplicationRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobApplicationTracker", "JobApplicationTracker\JobApplicationTracker.csproj", "{6BE60D1B-E602-4345-9722-3CB90EB29649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobApplicationTracker.IntegrationTests", "JobApplicationTracker.IntegrationTests\JobApplicationTracker.IntegrationTests.csproj", "{97EBF3FC-51D5-4B68-8F6D-4B7D25EAE798}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobApplicationTracker.Repository", "JobApplicationTracker.Repository\JobApplicationTracker.Repository.csproj", "{C6B98499-94DF-4424-840F-FF17F9C2718F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BE60D1B-E602-4345-9722-3CB90EB29649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE60D1B-E602-4345-9722-3CB90EB29649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE60D1B-E602-4345-9722-3CB90EB29649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE60D1B-E602-4345-9722-3CB90EB29649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97EBF3FC-51D5-4B68-8F6D-4B7D25EAE798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97EBF3FC-51D5-4B68-8F6D-4B7D25EAE798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97EBF3FC-51D5-4B68-8F6D-4B7D25EAE798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97EBF3FC-51D5-4B68-8F6D-4B7D25EAE798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6B98499-94DF-4424-840F-FF17F9C2718F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B98499-94DF-4424-840F-FF17F9C2718F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B98499-94DF-4424-840F-FF17F9C2718F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B98499-94DF-4424-840F-FF17F9C2718F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
