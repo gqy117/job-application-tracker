@@ -8,7 +8,7 @@ namespace JobApplicationTracker.IntegrationTests;
 public class ApplicationsControllerTest : TestBase
 {
     [Fact]
-    public async Task Get_Test()
+    public async Task GetAll_ShouldReturnAllRecords()
     {
         // Arrange
         ApplicationDbContext.Applications.Add(new Application()
@@ -28,6 +28,6 @@ public class ApplicationsControllerTest : TestBase
         var list = await response.Content.ReadFromJsonAsync<List<ApplicationDto>>();
 
         // Assert
-        list.Count.Should().Be(1);
+        list?.Count.Should().Be(1);
     }
 }

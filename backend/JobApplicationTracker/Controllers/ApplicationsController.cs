@@ -8,12 +8,10 @@ namespace JobApplicationTracker.Controllers;
 [Route("[controller]")]
 public class ApplicationsController(ApplicationRepository repository) : ControllerBase
 {
-    private ApplicationRepository _repository = repository;
-
     [HttpGet]
     public async Task<IEnumerable<ApplicationDto>> Get()
     {
-        var result = await _repository.GetAllAsync();
+        var result = await repository.GetAllAsync();
         
         return result.Select(x => new ApplicationDto(x.Id,
             x.Company,

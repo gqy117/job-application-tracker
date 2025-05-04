@@ -14,7 +14,7 @@ node_modules
 bin
 .idea
 obj
-
+*.user
 # Testing
 coverage
 *.DotSettings
