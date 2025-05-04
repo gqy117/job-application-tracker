@@ -1,7 +1,9 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using JobApplicationTracker.Contracts;
+using JobApplicationTracker.Repository;
 using JobApplicationTracker.Repository.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JobApplicationTracker.IntegrationTests;
 
@@ -11,7 +13,7 @@ public class ApplicationsControllerTest() : TestBase()
     public async Task GetAll_ShouldReturnAllRecords()
     {
         // Arrange
-        ApplicationDbContext.Applications.Add(new Application()
+        DbContext.Applications.Add(new Application()
         {
             Id = 1,
             Company = "Company",
@@ -20,7 +22,7 @@ public class ApplicationsControllerTest() : TestBase()
             DateApplied = DateTimeOffset.Now,
         });
 
-        await ApplicationDbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
 
         //Act
         var response = await Client.GetAsync("/applications");
@@ -35,7 +37,7 @@ public class ApplicationsControllerTest() : TestBase()
     public async Task GetById_ShouldReturnOneRecord()
     {
         // Arrange
-        ApplicationDbContext.Applications.Add(new Application()
+        DbContext.Applications.Add(new Application()
         {
             Id = 1,
             Company = "Company",
@@ -43,7 +45,7 @@ public class ApplicationsControllerTest() : TestBase()
             Status = "Status",
             DateApplied = DateTimeOffset.Now,
         });
-        ApplicationDbContext.Applications.Add(new Application()
+        DbContext.Applications.Add(new Application()
         {
             Id = 2,
             Company = "Company2",
@@ -52,7 +54,7 @@ public class ApplicationsControllerTest() : TestBase()
             DateApplied = DateTimeOffset.Now,
         });
 
-        await ApplicationDbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
 
         //Act
         var response = await Client.GetAsync("/applications/2");
@@ -67,7 +69,7 @@ public class ApplicationsControllerTest() : TestBase()
     public async Task Update_ShouldReturnOneRecord()
     {
         // Arrange
-        ApplicationDbContext.Applications.Add(new Application()
+        DbContext.Applications.Add(new Application()
         {
             Id = 1,
             Company = "Company",
@@ -76,17 +78,17 @@ public class ApplicationsControllerTest() : TestBase()
             DateApplied = DateTimeOffset.Now,
         });
 
-        await ApplicationDbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
 
         //Act
         var response = await Client.PutAsJsonAsync("/applications/1", "Offer");
         response.EnsureSuccessStatusCode();
 
         // Assert
-        var response2 = await Client.GetAsync("/applications/1");
-        response2.EnsureSuccessStatusCode();
-        var actual = await response2.Content.ReadFromJsonAsync<ApplicationDto>();
-        actual.Status.Should().Be("Offer");
+        using var scope = AppFactory.Services.CreateScope();
+        await using var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var result = await context.FindAsync<Application>(1);
+        result?.Status.Should().Be("Offer");
     }
     
     [Fact]
@@ -97,6 +99,6 @@ public class ApplicationsControllerTest() : TestBase()
         response.EnsureSuccessStatusCode();
         
         // Assert
-        ApplicationDbContext.Applications.Count().Should().Be(1);
+        DbContext.Applications.Count().Should().Be(1);
     }
 }

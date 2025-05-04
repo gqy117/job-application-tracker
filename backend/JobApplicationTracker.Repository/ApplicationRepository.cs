@@ -22,13 +22,11 @@ public class ApplicationRepository(ApplicationDbContext db)
         return entry.Entity;
     }
 
-    public async Task<bool> UpdateAsync(Application entity)
+    public async Task UpdateAsync(Application entity)
     {
         if (!await db.Applications.AnyAsync(x => x.Id == entity.Id))
-            return false;
+            return;
 
         await db.SaveChangesAsync();
-
-        return true;
     }
 }

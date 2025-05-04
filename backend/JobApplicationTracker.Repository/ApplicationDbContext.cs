@@ -11,4 +11,9 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseInMemoryDatabase("JobApplicationsDb");
+    }
 }

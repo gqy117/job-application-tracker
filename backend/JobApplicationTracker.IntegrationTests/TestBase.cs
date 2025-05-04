@@ -7,26 +7,27 @@ namespace JobApplicationTracker.IntegrationTests;
 public class TestBase : IDisposable
 {
     protected readonly HttpClient Client;
-    protected readonly ApplicationDbContext ApplicationDbContext;
+    protected readonly ApplicationDbContext DbContext;
     protected IServiceScope Scope;
+    protected WebApplicationFactory<Program> AppFactory;
 
     protected TestBase()
     {
-        var appFactory = new WebApplicationFactory<Program>();
-        Client = appFactory.CreateClient();
+        AppFactory = new WebApplicationFactory<Program>();
+        Client = AppFactory.CreateClient();
         
-        Scope = appFactory.Services.CreateScope();
+        Scope = AppFactory.Services.CreateScope();
 
-        ApplicationDbContext = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        DbContext = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
-        ApplicationDbContext.Database.EnsureDeleted();
-        ApplicationDbContext.Database.EnsureCreated();
+        DbContext.Database.EnsureDeleted();
+        DbContext.Database.EnsureCreated();
     }
 
     public void Dispose()
     {
-        ApplicationDbContext.Database.EnsureDeleted();
-        ApplicationDbContext.Dispose();
+        DbContext.Database.EnsureDeleted();
+        DbContext.Dispose();
         Scope.Dispose();
         Client.Dispose();
     }

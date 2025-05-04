@@ -1,6 +1,5 @@
 using JobApplicationTracker.Contracts;
 using JobApplicationTracker.Handlers;
-using JobApplicationTracker.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +7,7 @@ namespace JobApplicationTracker.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ApplicationsController(ApplicationRepository repository, IMediator mediator) : ControllerBase
+public class ApplicationsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IEnumerable<ApplicationDto>> Get()

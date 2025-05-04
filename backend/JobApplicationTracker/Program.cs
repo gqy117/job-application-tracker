@@ -1,11 +1,9 @@
 using JobApplicationTracker.Repository;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-    opt.UseInMemoryDatabase("JobApplicationsDb"));
+builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddScoped<ApplicationRepository>();
 
