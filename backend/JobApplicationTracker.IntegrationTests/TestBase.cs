@@ -4,14 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace JobApplicationTracker.IntegrationTests;
 
-public class TestBase : IClassFixture<CustomWebAppFactory>, IDisposable
+public class TestBase : IDisposable
 {
     protected readonly HttpClient Client;
     protected readonly ApplicationDbContext ApplicationDbContext;
     protected IServiceScope Scope;
 
-    protected TestBase(CustomWebAppFactory appFactory)
+    protected TestBase()
     {
+        var appFactory = new WebApplicationFactory<Program>();
         Client = appFactory.CreateClient();
         
         Scope = appFactory.Services.CreateScope();

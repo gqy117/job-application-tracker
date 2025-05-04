@@ -2,11 +2,10 @@ using System.Net.Http.Json;
 using FluentAssertions;
 using JobApplicationTracker.Contracts;
 using JobApplicationTracker.Repository.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace JobApplicationTracker.IntegrationTests;
 
-public class ApplicationsControllerTest(CustomWebAppFactory appFactory) : TestBase(appFactory)
+public class ApplicationsControllerTest() : TestBase()
 {
     [Fact]
     public async Task GetAll_ShouldReturnAllRecords()
