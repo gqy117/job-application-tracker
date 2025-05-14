@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace JobApplicationTracker.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("applications")]
 public class ApplicationsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
