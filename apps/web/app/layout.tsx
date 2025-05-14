@@ -3,7 +3,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import ThemeProvider from "@repo/ui/theme-provider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./queryClient";
 import axios from "axios";
 
 const geistSans = localFont({
@@ -14,8 +15,6 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
 });
-
-export const queryClient = new QueryClient();
 
 axios.defaults.baseURL = "/applications";
 

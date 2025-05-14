@@ -12,7 +12,7 @@ public class CreateApplicationHandler(ApplicationRepository repository) : IReque
         await repository.AddAsync(new Application
         {
             Company = command.Company,
-            DateApplied = DateTime.Now,
+            DateApplied = DateTimeOffset.Now,
             Position = command.Position,
             Status = "",
         });

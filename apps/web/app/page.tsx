@@ -1,11 +1,12 @@
 "use client";
 
 import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
 import { Table } from "@repo/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -32,6 +33,12 @@ export default function Home() {
     },
   });
 
+  const router = useRouter();
+
+  const onAddApplicationClicked = () => {
+    router.push("/job");
+  };
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -44,9 +51,12 @@ export default function Home() {
           height={38}
           priority
         />
-        <Table rows={rows} />
+        <Table
+          rows={rows}
+          onEditClicked={(row) => router.push(`/job/${row.id}`)}
+        />
 
-        <Button className={styles.secondary}>Open alert</Button>
+        <Button onClick={onAddApplicationClicked}>Add Application</Button>
       </main>
       <footer className={styles.footer}>
         <a

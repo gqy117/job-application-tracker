@@ -35,13 +35,13 @@ public class ApplicationsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] string status)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateApplicationDto dto)
     {
         var result = await mediator.Send(new GetApplicationByIdQuery(id));
         if (result is null)
             return NotFound();
 
-        await mediator.Send(new UpdateApplicationCommand(id, status));
+        await mediator.Send(new UpdateApplicationCommand(id, dto.Status));
 
         return NoContent();
     }
