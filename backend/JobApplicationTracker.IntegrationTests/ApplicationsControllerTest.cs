@@ -82,7 +82,7 @@ public class ApplicationsControllerTest() : TestBase()
         await DbContext.SaveChangesAsync();
 
         //Act
-        var response = await Client.PutAsJsonAsync("/applications/1", "Offer");
+        var response = await Client.PutAsJsonAsync("/applications/1", new UpdateApplicationDto("Offer"));
         response.EnsureSuccessStatusCode();
 
         // Assert
